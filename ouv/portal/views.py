@@ -6,8 +6,22 @@ from .models import *
 from .documents import *
 from .serializers import *
 
-def index (request):
-    return render(request,'index.html')
+# def index (request):
+#     return render(request,'index.html')
+
+from django.shortcuts import render
+from .documents import NewsDocument  # Ensure correct import path
+
+def index(request):
+    search_query = request.GET.get('search', '')
+    if search_query:
+        # Perform search using Elasticsearch
+        search_results = NewsDocument.search().query("multi_match", query=search_query, fields=['title', 'content']).to_queryset()
+    else:
+        search_results = []
+
+    return render(request, 'index.html', {'resources': search_results})
+
 
 
 from django_elasticsearch_dsl_drf.filter_backends import (

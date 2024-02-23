@@ -31,9 +31,9 @@ class Format(models.Model):
     ])
 
 class Ressource(models.Model):
-    title = models.CharField(max_length=255)
+    titre = models.CharField(max_length=255)
     lien_acces = models.CharField(max_length=255)
-    content = models.TextField()
+    description = models.TextField()
     description_auteurs = models.TextField()
     description_localite = models.TextField()
     protocole_collecte = models.TextField()

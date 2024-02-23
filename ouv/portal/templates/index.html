@@ -16,6 +16,22 @@
     Our HTML editor updates the webview automatically in real-time as you write code.
   </p>
   {% comment %} <script src="script.js"></script> {% endcomment %}
+
+  <!-- index.html -->
+<form action="" method="get">
+  <input type="text" name="search" placeholder="Search...">
+  <button type="submit">Search</button>
+</form>
+
+{% if resources %}
+  <ul>
+    {% for resource in resources %}
+      <li>{{ resource.titre }} - {{ resource.description }}</li>
+    {% endfor %}
+  </ul>
+{% endif %}
+
+
 </body>
 
 </html>

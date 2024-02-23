@@ -19,7 +19,8 @@ class NewsDocument(Document):
     
     id = fields.IntegerField(attr='id')
     fielddata=True
-    title = fields.TextField(
+    title = fields.TextField( 
+        attr='titre',
         fields={
             'raw':{
                 'type': 'keyword',
@@ -28,6 +29,7 @@ class NewsDocument(Document):
         }
     )
     content = fields.TextField(
+        attr='description',
         fields={
             'raw': {
                 'type': 'keyword',
