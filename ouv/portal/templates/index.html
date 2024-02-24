@@ -26,7 +26,12 @@
 {% if resources %}
   <ul>
     {% for resource in resources %}
-      <li>{{ resource.titre }} - {{ resource.description }}</li>
+      <li>{{ resource.titre }}</li>
+      Description: {{ resource.description }}
+      <br>
+      Category: {{ resource.categorie_name }}
+      <br>
+      Location: {{ resource.location_name }}
     {% endfor %}
   </ul>
 {% endif %}
