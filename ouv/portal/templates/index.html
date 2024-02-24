@@ -18,24 +18,32 @@
   {% comment %} <script src="script.js"></script> {% endcomment %}
 
   <!-- index.html -->
-<form action="" method="get">
-  <input type="text" name="search" placeholder="Search...">
-  <button type="submit">Search</button>
-</form>
-
-{% if resources %}
-  <ul>
-    {% for resource in resources %}
-      <li>{{ resource.titre }}</li>
-      Description: {{ resource.description }}
-      <br>
-      Category: {{ resource.categorie_name }}
-      <br>
-      Location: {{ resource.location_name }}
-    {% endfor %}
-  </ul>
-{% endif %}
-
+  <form action="" method="get">
+    <input type="text" name="search" placeholder="Search...">
+    <button type="submit">Search</button>
+  </form>
+  
+  {% if resources %}
+    <ul>
+      {% for resource in resources %}
+        <li>{{ resource.titre }}</li>
+        Description: {{ resource.description }}
+        <br>
+        Categories:
+        <ul>
+          {% for category in resource.categories.all %}
+            <li>{{ category.nom_categorie }}</li>
+          {% endfor %}
+        </ul>
+        Localities:
+        <ul>
+          {% for locality in resource.localites.all %}
+            <li>{{ locality.nom }}</li>
+          {% endfor %}
+        </ul>
+      {% endfor %}
+    </ul>
+  {% endif %}
 
 </body>
 

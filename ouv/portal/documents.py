@@ -1,44 +1,73 @@
 from django_elasticsearch_dsl import Document, fields, Index
 from .models import Ressource, Categorie, Localite
+from elasticsearch_dsl import analyzer
 
-# Assuming the Index and settings are correctly defined as before
+# Define the custom analyzer using the asciifolding filter
+folding_analyzer = analyzer(
+    'myanalyzer',
+    tokenizer='standard',
+    filter=['lowercase', 'asciifolding']
+)
+
+# Define the Elasticsearch index for Ressource documents
 PUBLISHER_INDEX = Index('ressource_demo')
-PUBLISHER_INDEX.settings(number_of_shards=1, number_of_replicas=1)
+PUBLISHER_INDEX.settings(
+    number_of_shards=1,
+    number_of_replicas=1,
+    analysis={
+        'analyzer': {
+            'myanalyzer': folding_analyzer.get_analysis_definition()
+        }
+    }
+)
 
 @PUBLISHER_INDEX.document
 class NewsDocument(Document):
     id = fields.IntegerField(attr='id')
     title = fields.TextField(
         attr='titre',
-        # fields={
-        #     'raw': {
-        #         'type': 'keyword',
-        #     }
-        # }
+        analyzer=folding_analyzer #'myanalyzer'
     )
     content = fields.TextField(
-        attr='description',
-        # fields={
-        #     'raw': {
-        #         'type': 'keyword',
-        #     }
-        # },
+        attr='description', 
+        analyzer=folding_analyzer #'myanalyzer'
     )
 
     # Adjusted fields for ManyToMany relationships
     categories = fields.NestedField(properties={
-        'nom_categorie': fields.TextField(),
+        'nom_categorie': fields.TextField(
+            analyzer=folding_analyzer#'myanalyzer'
+            ),
     })
 
     localites = fields.NestedField(properties={
-        'nom hihi': fields.TextField(),
+        'nom': fields.TextField(
+            analyzer=folding_analyzer#'myanalyzer'
+            ),
     })
 
+    class Index:
+        name = 'ressource_demo'
+
     class Django:
-        model = Ressource
-        related_models = [Categorie, Localite]
+        model = Ressource  # Specifies the Django model
+        related_models = [Categorie, Localite]  # Related models that trigger reindexing
 
     def get_instances_from_related(self, related_instance):
-        """Handle reindexing of Ressource documents when related instances change."""
+        """Handle reindexing of Ressource documents when related Categorie or Localite instances change."""
         if isinstance(related_instance, (Categorie, Localite)):
             return related_instance.ressource_set.all()
+
+# @PUBLISHER_INDEX.document
+# class NewsDocument(Document):
+#     id = fields.IntegerField(attr='id')
+#     title = fields.TextField(
+#         attr='titre',
+#         # analyzer='folding',
+#         analyzer='myanalyzer',
+#         # fields={
+#         #     'raw': {
+#         #         'type': 'keyword',
+#         #     }
+#         # }
+#     )
