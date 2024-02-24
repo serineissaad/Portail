@@ -1,50 +1,48 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Browser</title>
+  <title>Portail de données</title>
+  <link href="{% static 'styles.css' %}" rel="stylesheet" type="text/css">
 </head>
-
 <body>
-  <h1>
-    Write, edit and run HTML, CSS and JavaScript code online.
-  </h1>
-  <p>
-    Our HTML editor updates the webview automatically in real-time as you write code.
-  </p>
-  {% comment %} <script src="script.js"></script> {% endcomment %}
-
-  <!-- index.html -->
-  <form action="" method="get">
-    <input type="text" name="search" placeholder="Search...">
-    <button type="submit">Search</button>
-  </form>
-  
-  {% if resources %}
-    <ul>
-      {% for resource in resources %}
-        <li>{{ resource.titre }}</li>
-        Description: {{ resource.description }}
-        <br>
-        Categories:
-        <ul>
-          {% for category in resource.categories.all %}
-            <li>{{ category.nom_categorie }}</li>
-          {% endfor %}
-        </ul>
-        Localities:
-        <ul>
-          {% for locality in resource.localites.all %}
-            <li>{{ locality.nom }}</li>
-          {% endfor %}
-        </ul>
-      {% endfor %}
-    </ul>
-  {% endif %}
-
+  <div class="container">
+    <h1>Portail de données de santé et environnementales</h1>
+    <p>Introduisez les mots clés reliés aux données que vous cherchez</p>
+    <form action="" method="get" class="search-form">
+      <input type="text" name="search" placeholder="Search..." class="search-input">
+      <button type="submit" class="search-button">Search</button>
+    </form>
+    <div class="cards-container">
+      {% if resources %}
+        {% for resource in resources %}
+          <div class="card">
+            <h2>{{ resource.titre }}</h2>
+            <p><strong>Description:</strong> {{ resource.description }}</p>
+            <div><strong>Categories:</strong>
+              <ul>
+                {% for category in resource.categories.all %}
+                  <li>{{ category.nom_categorie }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+            <div><strong>Localities:</strong>
+              <ul>
+                {% for locality in resource.localites.all %}
+                  <li>{{ locality.nom }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+            <button class="card-button">View More</button>
+          </div>
+        {% endfor %}
+      {% else %}
+        <p>No resources found.</p>
+      {% endif %}
+    </div>
+  </div>
 </body>
-
 </html>

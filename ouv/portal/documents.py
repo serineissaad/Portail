@@ -54,20 +54,5 @@ class NewsDocument(Document):
         related_models = [Categorie, Localite]  # Related models that trigger reindexing
 
     def get_instances_from_related(self, related_instance):
-        """Handle reindexing of Ressource documents when related Categorie or Localite instances change."""
         if isinstance(related_instance, (Categorie, Localite)):
-            return related_instance.ressource_set.all()
-
-# @PUBLISHER_INDEX.document
-# class NewsDocument(Document):
-#     id = fields.IntegerField(attr='id')
-#     title = fields.TextField(
-#         attr='titre',
-#         # analyzer='folding',
-#         analyzer='myanalyzer',
-#         # fields={
-#         #     'raw': {
-#         #         'type': 'keyword',
-#         #     }
-#         # }
-#     )
+            return related_instance.ressources.all()

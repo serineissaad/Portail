@@ -1,0 +1,82 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f4f7; /* Lighter shade for the background */
+    color: #333;
+    padding: 20px;
+  }
+  
+  .container {
+    max-width: 800px;
+    margin: auto;
+    background: url('background-pattern.png'); /* Example for a special background, replace with actual path */
+  }
+  
+  .search-form {
+    margin-bottom: 20px;
+  }
+  
+  .search-input, .search-button {
+    padding: 10px;
+    border: 1px solid #ccc;
+  }
+  
+  .search-input {
+    margin-right: 5px;
+    width: calc(100% - 136px); /* Adjusted for button width */
+  }
+  
+  .search-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .search-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+  }
+  
+  .card {
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Increased shadow for emphasis */
+    border-radius: 8px; /* Rounded corners */
+  }
+  
+  .card h2 {
+    color: #0056b3; /* Slightly darker blue for better contrast */
+  }
+  
+  .card ul {
+    list-style-type: none;
+    padding-left: 0;
+  }
+  
+  .card ul li {
+    background-color: #e9ecef;
+    padding: 5px;
+    margin-bottom: 5px;
+    border-radius: 4px; /* Rounded corners for list items */
+  }
+  
+  .card-button {
+    background-color: #4CAF50; /* Green button */
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px; /* Rounded corners for the button */
+    display: block; /* Make the button take the full width of the card */
+    margin-top: 10px;
+  }
+  
+  .card-button:hover {
+    background-color: #45a049; /* Darker shade of green on hover */
+  }
+  
